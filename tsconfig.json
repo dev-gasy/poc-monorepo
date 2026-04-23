@@ -1,0 +1,13 @@
+{
+  "files": [],
+  "references": [
+    { "path": "./configs/monorepo" },
+    { "path": "./libs/utils" },
+    { "path": "./packages/common/ui" },
+    { "path": "./apps/ui-auto" },
+    { "path": "./apps/crm" },
+    { "path": "./apps/landing-pages" },
+    { "path": "./apps/tools" },
+    { "path": "./apps/client-center" }
+  ]
+}

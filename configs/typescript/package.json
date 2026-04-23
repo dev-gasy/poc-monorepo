@@ -1,0 +1,13 @@
+{
+  "name": "@dgig/typescript-config",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "exports": {
+    "./base.json": "./base.json",
+    "./library.json": "./library.json",
+    "./node.json": "./node.json",
+    "./react-app.json": "./react-app.json",
+    "./react-library.json": "./react-library.json"
+  }
+}

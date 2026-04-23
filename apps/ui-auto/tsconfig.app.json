@@ -1,0 +1,14 @@
+{
+  "extends": "@dgig/typescript-config/react-app.json",
+  "compilerOptions": {
+    "tsBuildInfoFile": "./tsconfig.app.tsbuildinfo",
+    "types": ["vite/client"],
+    "paths": {
+      "@/*": ["./src/*"],
+      "@dgig/monorepo-config": ["../../configs/monorepo/src/index.ts"],
+      "@dgig/ui": ["../../packages/common/ui/src/index.ts"],
+      "@dgig/utils": ["../../libs/utils/src/index.ts"]
+    }
+  },
+  "include": ["src"]
+}

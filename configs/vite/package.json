@@ -1,0 +1,12 @@
+{
+  "name": "@dgig/vite-config",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./create-app-config.d.ts",
+      "import": "./create-app-config.mjs"
+    }
+  }
+}

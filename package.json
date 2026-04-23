@@ -1,0 +1,41 @@
+{
+  "name": "@dgig/frontend-workspace",
+  "private": true,
+  "version": "0.0.0",
+  "packageManager": "pnpm@10.32.1",
+  "engines": {
+    "node": ">=22.0.0",
+    "pnpm": ">=10.0.0"
+  },
+  "scripts": {
+    "dev": "pnpm --filter @dgig/ui-auto dev",
+    "dev:ui-auto": "pnpm --filter @dgig/ui-auto dev",
+    "dev:crm": "pnpm --filter @dgig/crm dev",
+    "dev:landing-pages": "pnpm --filter @dgig/landing-pages dev",
+    "dev:tools": "pnpm --filter @dgig/tools dev",
+    "dev:client-center": "pnpm --filter @dgig/client-center dev",
+    "build": "pnpm -r --if-present build",
+    "lint": "eslint . --cache --max-warnings=0",
+    "typecheck": "pnpm -r --if-present typecheck",
+    "format": "prettier --cache --write .",
+    "clean": "pnpm -r --if-present clean && rimraf node_modules"
+  },
+  "devDependencies": {
+    "@dgig/eslint-config": "workspace:*",
+    "@dgig/prettier-config": "workspace:*",
+    "@dgig/typescript-config": "workspace:*",
+    "@eslint/js": "catalog:",
+    "@types/node": "catalog:",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "@vitejs/plugin-react": "catalog:",
+    "eslint": "catalog:",
+    "eslint-plugin-react-hooks": "catalog:",
+    "globals": "catalog:",
+    "prettier": "catalog:",
+    "rimraf": "catalog:",
+    "typescript": "catalog:",
+    "typescript-eslint": "catalog:",
+    "vite": "catalog:"
+  }
+}
