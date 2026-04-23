@@ -44,10 +44,20 @@ pnpm dev:tools
 pnpm dev:client-center
 pnpm build
 pnpm lint
+pnpm lint:fix
 pnpm typecheck
 pnpm format
+pnpm format:check
 pnpm clean
 ```
+
+## Code Quality
+
+- ESLint is shared through `@dgig/eslint-config` and applied from the root `eslint.config.mjs`.
+- Prettier is shared through `@dgig/prettier-config` and applied from the root `.prettierrc.mjs`.
+- Lefthook installs automatically on `pnpm install` through the root `prepare` script.
+- `pre-commit` only touches staged files: Prettier rewrites supported files first, then ESLint fixes staged JavaScript and TypeScript files.
+- Use `lefthook-local.yml` for machine-specific hook overrides; it is ignored by Git.
 
 ## Monorepo Runtime Config
 

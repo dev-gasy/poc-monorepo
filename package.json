@@ -16,9 +16,12 @@
     "dev:client-center": "pnpm --filter @dgig/client-center dev",
     "build": "pnpm -r --if-present build",
     "lint": "eslint . --cache --max-warnings=0",
+    "lint:fix": "eslint . --cache --fix --max-warnings=0",
     "typecheck": "pnpm -r --if-present typecheck",
     "format": "prettier --cache --write .",
-    "clean": "pnpm -r --if-present clean && rimraf node_modules"
+    "format:check": "prettier --cache --check .",
+    "prepare": "lefthook install",
+    "clean": "pnpm -r --if-present clean && rimraf node_modules .eslintcache"
   },
   "devDependencies": {
     "@dgig/eslint-config": "workspace:*",
@@ -32,6 +35,7 @@
     "eslint": "catalog:",
     "eslint-plugin-react-hooks": "catalog:",
     "globals": "catalog:",
+    "lefthook": "catalog:",
     "prettier": "catalog:",
     "rimraf": "catalog:",
     "typescript": "catalog:",

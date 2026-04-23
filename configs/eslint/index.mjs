@@ -6,7 +6,15 @@ import tseslint from 'typescript-eslint';
 export function createMonorepoEslintConfig() {
   return [
     {
-      ignores: ['**/dist/**', '**/node_modules/**', '**/.vite/**', '**/coverage/**'],
+      ignores: [
+        '**/dist/**',
+        '**/node_modules/**',
+        '**/.vite/**',
+        '**/coverage/**',
+        '**/.pnpm-store/**',
+        '**/.idea/**',
+        '**/.eslintcache',
+      ],
     },
     js.configs.recommended,
     ...tseslint.configs.recommended,

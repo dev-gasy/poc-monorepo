@@ -6,6 +6,8 @@ coverage
 .env.local
 .eslintcache
 .idea
+.pnpm-store
+lefthook-local.yml
 *.tsbuildinfo
 .DS_Store
 pnpm-debug.log*

@@ -3,6 +3,10 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "dependencies": {
+    "@vitejs/plugin-react": "catalog:",
+    "vite": "catalog:"
+  },
   "exports": {
     ".": {
       "types": "./create-app-config.d.ts",
