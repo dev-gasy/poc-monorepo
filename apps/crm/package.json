@@ -16,6 +16,7 @@
     "@dgig/vite-config": "workspace:*"
   },
   "dependencies": {
+    "@dgig/monorepo-config": "workspace:*",
     "@dgig/ui": "workspace:*",
     "@dgig/utils": "workspace:*",
     "react": "catalog:",

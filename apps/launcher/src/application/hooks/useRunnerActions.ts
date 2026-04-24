@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import type { Dispatch } from 'react';
 
-import type { LauncherApp } from '@/domain/launcherCatalog';
+import { launcherApps } from '@/domain/launcherCatalog';
 import type { RunnerCommandAction } from '@/domain/launcherTypes';
 import { httpRunnerGateway } from '@/infra/httpRunnerGateway';
 import type { RunnerAction } from '@/application/launcherState';
@@ -17,7 +17,13 @@ export function useRunnerActions(dispatch: Dispatch<RunnerAction>) {
     async (action: RunnerCommandAction, id: string) => {
       dispatch({ type: 'PENDING_START', id });
 
-      const result = await httpRunnerGateway.executeCommandAction(action, id);
+      const app = launcherApps.find((item) => item.id === id);
+      const result =
+        action === 'run' && app
+          ? await httpRunnerGateway
+              .executePortCleanup(app.id, app.port)
+              .andThen(() => httpRunnerGateway.executeCommandAction(action, app.id))
+          : await httpRunnerGateway.executeCommandAction(action, id);
 
       result.match(
         (status) => {
@@ -34,31 +40,5 @@ export function useRunnerActions(dispatch: Dispatch<RunnerAction>) {
     [dispatch],
   );
 
-  const toggleAppRunner = useCallback(
-    async (action: RunnerCommandAction, app: LauncherApp) => {
-      dispatch({ type: 'PENDING_START', id: app.id });
-
-      const result =
-        action === 'run'
-          ? await httpRunnerGateway
-              .executePortCleanup(app.id, app.port)
-              .andThen(() => httpRunnerGateway.executeCommandAction(action, app.id))
-          : await httpRunnerGateway.executeCommandAction(action, app.id);
-
-      result.match(
-        (status) => {
-          dispatch({ type: 'STATUS_UPDATED', id: app.id, status });
-        },
-        (error) => {
-          logLauncherError('App runner action failed', error.message);
-          dispatch({ type: 'RUNNER_UNAVAILABLE' });
-        },
-      );
-
-      dispatch({ type: 'PENDING_END', id: app.id });
-    },
-    [dispatch],
-  );
-
-  return { toggleRunner, toggleAppRunner };
+  return { toggleRunner };
 }

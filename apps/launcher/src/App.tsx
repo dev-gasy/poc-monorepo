@@ -22,7 +22,6 @@ export default function App() {
     scopeCounts,
     isRunnerReady,
     toggleRunner,
-    toggleAppRunner,
     handleQueryChange,
     handleQueryClear,
     handleScopeChange,
@@ -58,7 +57,7 @@ export default function App() {
                   status={runner.statusById[app.id]}
                   isPending={runner.pendingIds.has(app.id)}
                   isRunnerReady={isRunnerReady}
-                  onToggle={toggleAppRunner}
+                  onToggle={toggleRunner}
                 />
               ))}
             </ul>

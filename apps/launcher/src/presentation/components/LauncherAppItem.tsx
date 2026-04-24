@@ -10,7 +10,7 @@ interface LauncherAppItemProps {
   status: CommandStatus | undefined;
   isPending: boolean;
   isRunnerReady: boolean;
-  onToggle: (action: RunnerCommandAction, app: LauncherApp) => void;
+  onToggle: (action: RunnerCommandAction, id: string) => void;
 }
 
 export function LauncherAppItem({
@@ -55,7 +55,7 @@ export function LauncherAppItem({
               isRunning={isRunning}
               isPending={isPending}
               disabled={isDisabled}
-              onClick={() => onToggle(isRunning ? 'stop' : 'run', app)}
+              onClick={() => onToggle(isRunning ? 'stop' : 'run', app.id)}
             />
           )}
 

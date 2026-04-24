@@ -19,7 +19,7 @@ export function useLauncherController() {
 
   useRunnerPolling(dispatchRunner);
 
-  const { toggleRunner, toggleAppRunner } = useRunnerActions(dispatchRunner);
+  const { toggleRunner } = useRunnerActions(dispatchRunner);
 
   const handleQueryChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
     startTransition(() => {
@@ -64,7 +64,6 @@ export function useLauncherController() {
     scopeCounts,
     isRunnerReady: runner.availability === 'ready',
     toggleRunner,
-    toggleAppRunner,
     handleQueryChange,
     handleQueryClear,
     handleScopeChange,

@@ -112,6 +112,9 @@ importers:
 
   apps/client-center:
     dependencies:
+      '@dgig/monorepo-config':
+        specifier: workspace:*
+        version: link:../../configs/monorepo
       '@dgig/ui':
         specifier: workspace:*
         version: link:../../packages/common/ui
@@ -134,6 +137,9 @@ importers:
 
   apps/crm:
     dependencies:
+      '@dgig/monorepo-config':
+        specifier: workspace:*
+        version: link:../../configs/monorepo
       '@dgig/ui':
         specifier: workspace:*
         version: link:../../packages/common/ui
@@ -156,6 +162,9 @@ importers:
 
   apps/landing-pages:
     dependencies:
+      '@dgig/monorepo-config':
+        specifier: workspace:*
+        version: link:../../configs/monorepo
       '@dgig/ui':
         specifier: workspace:*
         version: link:../../packages/common/ui
@@ -206,6 +215,9 @@ importers:
 
   apps/tools:
     dependencies:
+      '@dgig/monorepo-config':
+        specifier: workspace:*
+        version: link:../../configs/monorepo
       '@dgig/ui':
         specifier: workspace:*
         version: link:../../packages/common/ui
