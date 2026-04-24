@@ -1,4 +1,4 @@
-import type { CommandStatus, RunnerAvailability, Scope } from './types';
+import type { CommandStatus, RunnerAvailability, Scope } from '@/domain/launcherTypes';
 
 export interface RunnerState {
   availability: RunnerAvailability;
@@ -16,15 +16,12 @@ export type RunnerAction =
 export interface UiState {
   scope: Scope;
   query: string;
-  copiedId: string | null;
 }
 
 export type UiAction =
   | { type: 'SET_SCOPE'; scope: Scope }
   | { type: 'SET_QUERY'; query: string }
-  | { type: 'CLEAR_QUERY' }
-  | { type: 'COPIED'; id: string }
-  | { type: 'COPY_EXPIRED' };
+  | { type: 'CLEAR_QUERY' };
 
 export const initialRunnerState: RunnerState = {
   availability: 'checking',
@@ -35,7 +32,6 @@ export const initialRunnerState: RunnerState = {
 export const initialUiState: UiState = {
   scope: 'all',
   query: '',
-  copiedId: null,
 };
 
 export function runnerReducer(state: RunnerState, action: RunnerAction): RunnerState {
@@ -78,10 +74,6 @@ export function uiReducer(state: UiState, action: UiAction): UiState {
       return { ...state, query: action.query };
     case 'CLEAR_QUERY':
       return { ...state, query: '' };
-    case 'COPIED':
-      return { ...state, copiedId: action.id };
-    case 'COPY_EXPIRED':
-      return { ...state, copiedId: null };
     default:
       return state;
   }

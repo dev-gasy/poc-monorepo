@@ -2,22 +2,27 @@ export type IconName = 'check' | 'copy' | 'external' | 'play' | 'stop' | 'termin
 export type Scope = 'all' | 'apps' | 'tasks';
 export type RunnerAvailability = 'checking' | 'ready' | 'unavailable';
 export type CommandState = 'idle' | 'running' | 'completed' | 'failed' | 'stopped' | 'stopping';
+export type RunnerCommandAction = 'run' | 'stop';
+
+export interface LauncherError {
+  readonly message: string;
+}
 
 export interface CommandStatus {
-  id: string;
-  state: CommandState;
-  pid?: number;
-  startedAt?: string;
-  finishedAt?: string;
-  exitCode?: number | null;
-  logs: string[];
+  readonly id: string;
+  readonly state: CommandState;
+  readonly pid?: number;
+  readonly startedAt?: string;
+  readonly finishedAt?: string;
+  readonly exitCode?: number | null;
+  readonly logs: readonly string[];
 }
 
 export interface RunnerStatusesResponse {
-  statuses: CommandStatus[];
+  readonly statuses: readonly CommandStatus[];
 }
 
 export interface RunnerActionResponse {
-  error?: string;
-  status?: CommandStatus;
+  readonly error?: string;
+  readonly status?: CommandStatus;
 }

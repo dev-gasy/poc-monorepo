@@ -6,7 +6,7 @@ import { promisify } from 'node:util';
 
 import type { Plugin } from 'vite';
 
-import { launcherApps, launcherCommandEntries } from './src/data';
+import { launcherApps, launcherCommandEntries } from './src/domain/launcherCatalog';
 
 type CommandState = 'idle' | 'running' | 'completed' | 'failed' | 'stopped' | 'stopping';
 
@@ -54,16 +54,7 @@ function createManagedCommands(): Map<string, ManagedCommand> {
     launcherCommandEntries.map((entry) => [
       entry.id,
       {
-        status:
-          entry.id === 'launcher'
-            ? {
-                id: entry.id,
-                state: 'running' as const,
-                pid: process.pid,
-                startedAt: new Date().toISOString(),
-                logs: ['Launcher is running in the current Vite dev session.'],
-              }
-            : createIdleStatus(entry.id),
+        status: createIdleStatus(entry.id),
       },
     ]),
   );

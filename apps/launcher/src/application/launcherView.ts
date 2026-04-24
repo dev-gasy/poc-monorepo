@@ -1,5 +1,5 @@
-import type { LauncherApp, LauncherTask } from '../data';
-import type { CommandState, CommandStatus } from '../types';
+import type { LauncherApp, LauncherTask } from '@/domain/launcherCatalog';
+import type { CommandState, CommandStatus } from '@/domain/launcherTypes';
 
 export const commandStateLabels: Record<CommandState, string> = {
   idle: 'Idle',

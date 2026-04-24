@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 
-import type { CommandStatus } from '../types';
+import type { CommandStatus } from '@/domain/launcherTypes';
 
 interface LauncherListItemProps {
   id: string;

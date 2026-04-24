@@ -1,6 +1,6 @@
 import type { ChangeEvent } from 'react';
 
-import type { Scope } from '../types';
+import type { Scope } from '@/domain/launcherTypes';
 import { Icon } from './Icon';
 
 interface ScopeOption {

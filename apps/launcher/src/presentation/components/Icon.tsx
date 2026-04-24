@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 
-import type { IconName } from '../types';
+import type { IconName } from '@/domain/launcherTypes';
 
 export function Icon({ name }: { name: IconName }) {
   const paths: Record<IconName, ReactNode> = {

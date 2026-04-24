@@ -1,7 +1,7 @@
-import type { LauncherTask } from '../data';
-import { getStatusParts, isRunningState } from '../services/launcherView';
-import type { CommandStatus } from '../types';
-import { CopyCommandButton, RunToggleButton } from './ActionButtons';
+import { getStatusParts, isRunningState } from '@/application/launcherView';
+import type { LauncherTask } from '@/domain/launcherCatalog';
+import type { CommandStatus, RunnerCommandAction } from '@/domain/launcherTypes';
+import { RunToggleButton } from './ActionButtons';
 import { Icon } from './Icon';
 import { LauncherListItem } from './LauncherListItem';
 
@@ -9,20 +9,16 @@ interface LauncherTaskItemProps {
   task: LauncherTask;
   status: CommandStatus | undefined;
   isPending: boolean;
-  isCopied: boolean;
   isRunnerReady: boolean;
-  onToggle: (action: 'run' | 'stop', id: string) => void;
-  onCopy: (id: string, command: string) => void;
+  onToggle: (action: RunnerCommandAction, id: string) => void;
 }
 
 export function LauncherTaskItem({
   task,
   status,
   isPending,
-  isCopied,
   isRunnerReady,
   onToggle,
-  onCopy,
 }: LauncherTaskItemProps) {
   const isRunning = isRunningState(status?.state);
   const isDisabled = !isRunnerReady || isPending;
@@ -50,12 +46,6 @@ export function LauncherTaskItem({
             isPending={isPending}
             disabled={isDisabled}
             onClick={() => onToggle(isRunning ? 'stop' : 'run', task.id)}
-          />
-
-          <CopyCommandButton
-            name={task.name}
-            isCopied={isCopied}
-            onClick={() => onCopy(task.id, task.command)}
           />
         </>
       }

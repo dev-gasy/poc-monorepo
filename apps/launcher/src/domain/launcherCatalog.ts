@@ -2,57 +2,42 @@ export type LauncherCommandKind = 'app' | 'task';
 export type LauncherCommandMode = 'persistent' | 'oneshot';
 
 export interface LauncherCommandEntry {
-  id: string;
-  kind: LauncherCommandKind;
-  command: string;
-  commandArgs: string[];
-  commandMode: LauncherCommandMode;
+  readonly id: string;
+  readonly kind: LauncherCommandKind;
+  readonly command: string;
+  readonly commandArgs: readonly string[];
+  readonly commandMode: LauncherCommandMode;
 }
 
 export interface LauncherApp {
-  id: string;
-  kind: 'app';
-  name: string;
-  packageName: string;
-  description: string;
-  command: string;
-  commandArgs: string[];
-  commandMode: LauncherCommandMode;
-  href: string;
-  port: number;
-  lane: string;
-  tags: string[];
-  canRun: boolean;
+  readonly id: string;
+  readonly kind: 'app';
+  readonly name: string;
+  readonly packageName: string;
+  readonly description: string;
+  readonly command: string;
+  readonly commandArgs: readonly string[];
+  readonly commandMode: LauncherCommandMode;
+  readonly href: string;
+  readonly port: number;
+  readonly lane: string;
+  readonly tags: readonly string[];
+  readonly canRun: boolean;
 }
 
 export interface LauncherTask {
-  id: string;
-  kind: 'task';
-  name: string;
-  description: string;
-  command: string;
-  commandArgs: string[];
-  commandMode: LauncherCommandMode;
-  lane: string;
-  tags: string[];
+  readonly id: string;
+  readonly kind: 'task';
+  readonly name: string;
+  readonly description: string;
+  readonly command: string;
+  readonly commandArgs: readonly string[];
+  readonly commandMode: LauncherCommandMode;
+  readonly lane: string;
+  readonly tags: readonly string[];
 }
 
-export const launcherApps: LauncherApp[] = [
-  {
-    id: 'launcher',
-    kind: 'app',
-    name: 'Launcher',
-    packageName: '@dgig/launcher',
-    description: 'Workspace control room for opening apps, copying commands, and monitoring lanes.',
-    command: 'pnpm dev:launcher',
-    commandArgs: ['dev:launcher'],
-    commandMode: 'persistent',
-    href: 'http://localhost:3001',
-    port: 3001,
-    lane: 'Operations',
-    tags: ['control room', 'workspace', 'launcher'],
-    canRun: false,
-  },
+export const launcherApps: readonly LauncherApp[] = [
   {
     id: 'ui-auto',
     kind: 'app',
@@ -130,7 +115,7 @@ export const launcherApps: LauncherApp[] = [
   },
 ];
 
-export const launcherTasks: LauncherTask[] = [
+export const launcherTasks: readonly LauncherTask[] = [
   {
     id: 'install',
     kind: 'task',
@@ -199,4 +184,7 @@ export const launcherTasks: LauncherTask[] = [
   },
 ];
 
-export const launcherCommandEntries: LauncherCommandEntry[] = [...launcherApps, ...launcherTasks];
+export const launcherCommandEntries: readonly LauncherCommandEntry[] = [
+  ...launcherApps,
+  ...launcherTasks,
+];

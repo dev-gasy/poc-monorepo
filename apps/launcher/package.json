@@ -19,6 +19,7 @@
     "@dgig/monorepo-config": "workspace:*",
     "@dgig/ui": "workspace:*",
     "@dgig/utils": "workspace:*",
+    "neverthrow": "^8.2.0",
     "react": "catalog:",
     "react-dom": "catalog:"
   }
