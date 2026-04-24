@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "skills": {
+    "archi-vide": {
+      "source": "thonymg/skills",
+      "sourceType": "github",
+      "computedHash": "be32531a2ffff2100bf0a66ff2fa36a1e64a23f2d2e14e083a35c99765c3789c"
+    },
+    "naming-convention": {
+      "source": "thonymg/skills",
+      "sourceType": "github",
+      "computedHash": "47c1270b22c36cccaa2299fcc749ebdf567a95e31d1501d6d686106749e1b432"
+    }
+  }
+}
