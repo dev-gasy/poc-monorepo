@@ -1,7 +1,8 @@
-import { spawn, type ChildProcessByStdio } from 'node:child_process';
+import { execFile, spawn, type ChildProcessByStdio } from 'node:child_process';
 import type { IncomingMessage, ServerResponse } from 'node:http';
 import type { Readable } from 'node:stream';
 import { fileURLToPath, URL } from 'node:url';
+import { promisify } from 'node:util';
 
 import type { Plugin } from 'vite';
 
@@ -28,8 +29,14 @@ interface CommandActionPayload {
   id?: string;
 }
 
+interface KillPortPayload {
+  id?: string;
+  port?: number;
+}
+
 const maxLogLines = 14;
 const workspaceRoot = fileURLToPath(new URL('../../', import.meta.url));
+const execFileAsync = promisify(execFile);
 const runnableCommands = launcherCommandEntries.filter(
   (entry) => entry.kind === 'task' || launcherApps.some((app) => app.id === entry.id && app.canRun),
 );
@@ -99,7 +106,7 @@ function sendJson(response: ServerResponse, statusCode: number, payload: unknown
   response.end(JSON.stringify(payload));
 }
 
-async function readRequestBody(request: IncomingMessage) {
+async function readRequestBody<TPayload extends object>(request: IncomingMessage) {
   const chunks: Buffer[] = [];
 
   for await (const chunk of request) {
@@ -107,10 +114,41 @@ async function readRequestBody(request: IncomingMessage) {
   }
 
   if (chunks.length === 0) {
-    return {};
+    return {} as TPayload;
   }
 
-  return JSON.parse(Buffer.concat(chunks).toString('utf8')) as CommandActionPayload;
+  return JSON.parse(Buffer.concat(chunks).toString('utf8')) as TPayload;
+}
+
+function getAppByPortPayload(payload: KillPortPayload) {
+  return launcherApps.find((app) => app.id === payload.id || app.port === payload.port);
+}
+
+async function getListeningPids(port: number) {
+  try {
+    const { stdout } = await execFileAsync('lsof', ['-nP', '-ti', `tcp:${port}`, '-sTCP:LISTEN']);
+
+    return stdout
+      .split(/\s+/)
+      .map((value) => Number(value))
+      .filter((value) => Number.isInteger(value) && value > 0);
+  } catch {
+    return [];
+  }
+}
+
+async function killPort(port: number) {
+  const pids = await getListeningPids(port);
+
+  for (const pid of pids) {
+    try {
+      process.kill(pid, 'SIGTERM');
+    } catch {
+      // Ignore races where the process exits after lsof but before SIGTERM.
+    }
+  }
+
+  return pids;
 }
 
 export function createLauncherCommandRunnerPlugin(): Plugin {
@@ -243,7 +281,7 @@ export function createLauncherCommandRunnerPlugin(): Plugin {
           }
 
           if (request.method === 'POST' && request.url === '/run') {
-            const payload = await readRequestBody(request);
+            const payload = await readRequestBody<CommandActionPayload>(request);
 
             if (!payload.id) {
               sendJson(response, 400, { error: 'Missing command id.' });
@@ -262,7 +300,7 @@ export function createLauncherCommandRunnerPlugin(): Plugin {
           }
 
           if (request.method === 'POST' && request.url === '/stop') {
-            const payload = await readRequestBody(request);
+            const payload = await readRequestBody<CommandActionPayload>(request);
 
             if (!payload.id) {
               sendJson(response, 400, { error: 'Missing command id.' });
@@ -277,6 +315,39 @@ export function createLauncherCommandRunnerPlugin(): Plugin {
             }
 
             sendJson(response, 200, { status });
+            return;
+          }
+
+          if (request.method === 'POST' && request.url === '/kill-port') {
+            const payload = await readRequestBody<KillPortPayload>(request);
+            const app = getAppByPortPayload(payload);
+
+            if (!app) {
+              sendJson(response, 404, { error: 'Unknown app port.' });
+              return;
+            }
+
+            const pids = await killPort(app.port);
+            const managedCommand = managedCommands.get(app.id);
+
+            if (managedCommand) {
+              managedCommand.child = undefined;
+              managedCommand.status = {
+                id: app.id,
+                state: pids.length > 0 ? 'stopped' : 'idle',
+                finishedAt: new Date().toISOString(),
+                logs: [
+                  pids.length > 0
+                    ? `[system] Killed ${pids.length} process${pids.length === 1 ? '' : 'es'} on port ${app.port}: ${pids.join(', ')}.`
+                    : `[system] No listener found on port ${app.port}.`,
+                ],
+              };
+            }
+
+            sendJson(response, 200, {
+              killedPids: pids,
+              status: getSnapshot(managedCommand?.status ?? createIdleStatus(app.id)),
+            });
             return;
           }
         } catch (error) {
