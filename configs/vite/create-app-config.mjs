@@ -3,8 +3,9 @@ import { fileURLToPath, URL } from 'node:url';
 import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vite';
 
-export function createAppConfig(importMetaUrl, cacheKey) {
+export function createAppConfig(importMetaUrl, cacheKey, options = {}) {
   const workspaceRoot = fileURLToPath(new URL('../../', importMetaUrl));
+  const { port } = options;
 
   return defineConfig({
     cacheDir: `../../node_modules/.vite/${cacheKey}`,
@@ -22,6 +23,12 @@ export function createAppConfig(importMetaUrl, cacheKey) {
       dedupe: ['react', 'react-dom'],
     },
     server: {
+      ...(port
+        ? {
+            port,
+            strictPort: true,
+          }
+        : {}),
       fs: {
         allow: [workspaceRoot],
       },

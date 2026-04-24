@@ -9,6 +9,7 @@ Domain-oriented pnpm + Vite monorepo for multiple React applications with shared
 ├── apps/
 │   ├── client-center/
 │   ├── crm/
+│   ├── launcher/
 │   ├── landing-pages/
 │   ├── tools/
 │   └── ui-auto/
@@ -38,6 +39,7 @@ Domain-oriented pnpm + Vite monorepo for multiple React applications with shared
 ```bash
 pnpm install
 pnpm dev
+pnpm dev:launcher
 pnpm dev:crm
 pnpm dev:landing-pages
 pnpm dev:tools
@@ -81,4 +83,5 @@ Use `.env.example` as the starting point for local setup.
 - `libs/` holds internal shared code such as `@dgig/utils`, which keeps app code lean and reuse obvious.
 - `packages/common/*` contains reusable publishable-style packages such as `@dgig/ui`, while the other package buckets stay ready for domain-specific modules.
 - `apps/*` gives each product surface an isolated Vite app with consistent tooling, clean package boundaries, and independent local dev entry points.
+- `apps/launcher` acts as a workspace control room for opening apps, copying task commands, and keeping common workflows in one place.
 - Shared workspace packages are still linked through pnpm, while Vite resolves them to source during local dev for fast startup and HMR.

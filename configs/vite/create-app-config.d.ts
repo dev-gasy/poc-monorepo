@@ -1,3 +1,11 @@
 import type { UserConfigExport } from 'vite';
 
-export declare function createAppConfig(importMetaUrl: string, cacheKey: string): UserConfigExport;
+export interface CreateAppConfigOptions {
+  port?: number;
+}
+
+export declare function createAppConfig(
+  importMetaUrl: string,
+  cacheKey: string,
+  options?: CreateAppConfigOptions,
+): UserConfigExport;

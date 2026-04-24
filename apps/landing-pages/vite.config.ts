@@ -1,3 +1,3 @@
 import { createAppConfig } from '@dgig/vite-config';
 
-export default createAppConfig(import.meta.url, 'landing-pages');
+export default createAppConfig(import.meta.url, 'landing-pages', { port: 5001 });

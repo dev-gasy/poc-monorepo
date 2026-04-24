@@ -1,0 +1,25 @@
+{
+  "name": "@dgig/launcher",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint": "eslint src vite.config.ts command-runner-plugin.ts --cache",
+    "typecheck": "tsc -b --pretty false",
+    "clean": "rimraf dist tsconfig.app.tsbuildinfo tsconfig.node.tsbuildinfo"
+  },
+  "devDependencies": {
+    "@dgig/typescript-config": "workspace:*",
+    "@dgig/vite-config": "workspace:*"
+  },
+  "dependencies": {
+    "@dgig/monorepo-config": "workspace:*",
+    "@dgig/ui": "workspace:*",
+    "@dgig/utils": "workspace:*",
+    "react": "catalog:",
+    "react-dom": "catalog:"
+  }
+}

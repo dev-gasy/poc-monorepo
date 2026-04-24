@@ -176,6 +176,31 @@ importers:
         specifier: workspace:*
         version: link:../../configs/vite
 
+  apps/launcher:
+    dependencies:
+      '@dgig/monorepo-config':
+        specifier: workspace:*
+        version: link:../../configs/monorepo
+      '@dgig/ui':
+        specifier: workspace:*
+        version: link:../../packages/common/ui
+      '@dgig/utils':
+        specifier: workspace:*
+        version: link:../../libs/utils
+      react:
+        specifier: 'catalog:'
+        version: 19.2.5
+      react-dom:
+        specifier: 'catalog:'
+        version: 19.2.5(react@19.2.5)
+    devDependencies:
+      '@dgig/typescript-config':
+        specifier: workspace:*
+        version: link:../../configs/typescript
+      '@dgig/vite-config':
+        specifier: workspace:*
+        version: link:../../configs/vite
+
   apps/tools:
     dependencies:
       '@dgig/ui':

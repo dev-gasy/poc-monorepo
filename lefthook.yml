@@ -1,0 +1,9 @@
+pre-commit:
+  parallel: true
+  jobs:
+    - name: prettier
+      glob: '**/*.{js,mjs,cjs,ts,mts,cts,jsx,tsx,json,css,scss,md,yml,yaml,html}'
+      run: pnpm exec prettier --write --ignore-unknown {staged_files} && git add {staged_files}
+    - name: eslint
+      glob: '**/*.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'
+      run: pnpm exec eslint --cache --fix --max-warnings=0 {staged_files} && git add {staged_files}
