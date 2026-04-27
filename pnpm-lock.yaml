@@ -282,6 +282,10 @@ importers:
         version: 8.59.0(eslint@9.39.4)(typescript@6.0.3)
 
   configs/monorepo:
+    dependencies:
+      neverthrow:
+        specifier: ^8.2.0
+        version: 8.2.0
     devDependencies:
       '@dgig/typescript-config':
         specifier: workspace:*

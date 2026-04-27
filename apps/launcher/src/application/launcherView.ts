@@ -1,5 +1,12 @@
+import { fromThrowable } from 'neverthrow';
+
 import type { LauncherApp, LauncherTask } from '@/domain/launcherCatalog';
 import type { CommandState, CommandStatus } from '@/domain/launcherTypes';
+
+const parseAppLocation = fromThrowable(
+  (href: string) => new URL(href).host,
+  () => null,
+);
 
 export const commandStateLabels: Record<CommandState, string> = {
   idle: 'Idle',
@@ -54,9 +61,5 @@ export function getStatusParts(status: CommandStatus | undefined) {
 }
 
 export function formatAppLocation(href: string) {
-  try {
-    return new URL(href).host;
-  } catch {
-    return href;
-  }
+  return parseAppLocation(href).unwrapOr(href);
 }

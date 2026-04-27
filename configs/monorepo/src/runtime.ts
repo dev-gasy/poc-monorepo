@@ -1,3 +1,5 @@
+import { fromThrowable } from 'neverthrow';
+
 import { brands, getBrandPreset, isBrand, type Brand } from './brands';
 import { isLanguage, languages, type Language } from './languages';
 
@@ -67,11 +69,15 @@ function readEndpointUrl(source: MonorepoConfigSource): string {
   const rawValue =
     readString(source, monorepoEnvKeys.endpointUrl) ?? defaultMonorepoConfig.endpointUrl;
 
-  try {
-    return new URL(rawValue).toString().replace(/\/$/, '');
-  } catch {
-    throw new Error(`Invalid endpoint URL "${rawValue}". Expected a valid absolute URL.`);
-  }
+  return fromThrowable(
+    () => new URL(rawValue).toString().replace(/\/$/, ''),
+    () => new Error(`Invalid endpoint URL "${rawValue}". Expected a valid absolute URL.`),
+  )().match(
+    (endpointUrl) => endpointUrl,
+    (error) => {
+      throw error;
+    },
+  );
 }
 
 export function createMonorepoConfig(source: MonorepoConfigSource = {}): MonorepoConfig {

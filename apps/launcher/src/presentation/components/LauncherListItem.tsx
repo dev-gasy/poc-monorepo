@@ -48,6 +48,8 @@ export function LauncherListItem({
   status,
   statusParts,
 }: LauncherListItemProps) {
+  const logs = status?.logs ?? [];
+
   return (
     <li className="launch-item">
       <article className="launch-row">
@@ -68,7 +70,7 @@ export function LauncherListItem({
         <div className="launch-content">
           {content}
 
-          {status?.logs.length ? <pre className="command-log">{status.logs.join('\n')}</pre> : null}
+          {logs.length ? <pre className="command-log">{logs.join('\n')}</pre> : null}
         </div>
 
         <StatusFooter id={id} status={status} statusParts={statusParts} />
